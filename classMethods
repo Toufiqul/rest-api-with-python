@@ -1,0 +1,53 @@
+class ClassTest:
+    def instanceMethod(self):
+        print(f"called instanceMethod of {self}")
+
+    @classmethod
+    def classMethod(cls):
+        print(f"called classMethod of {cls}")
+
+    @staticmethod
+    def StaticMethod(): ##empty parameters
+        print("static method")
+
+    def __repr__(self):
+        return "this is test"
+    #changes the self. learn more if needed
+
+c = ClassTest()
+c.instanceMethod()
+
+ClassTest.classMethod() ##called on the function instead of the object. if no parameter is passed then classname is used by default ClassTest.classMethod(ClassTest)
+
+ClassTest.StaticMethod() #actually is just a function. not really a method. just exists in a class
+
+
+##### use of class methods #####
+##facties##
+
+class Book:
+    types=("hardcover","paperback")
+
+    def __init__(self, name,bookType,weight):
+        self.name = name
+        self.bookType = bookType
+        self.weight = weight
+
+    def __repr__(self):
+        return f"<Book {self.name}, {self.bookType}, {self.weight}g>"
+    
+    @classmethod
+    def hardcover(cls,name,weight):
+        return cls(name,cls.types[0],weight+100)
+        # return Book(name,Book.types[0],weight) does the same thing as cls == Book
+    
+    @classmethod
+    def paperback(cls,name,weight):
+        return cls(name,cls.types[1],weight)
+    
+
+realBook = Book.hardcover("The lord of the Rings",500)
+virtualBook = Book.paperback("The lord of the Rings",500)
+
+print(realBook)
+print(virtualBook)
