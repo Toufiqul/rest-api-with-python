@@ -32,3 +32,20 @@ def create_store():
     }
     stores.append(new_store)
     return new_store,201 #201 is the return status code
+
+@app.post("/store/<string:name>/item") #grabbing the store name. whatever text comes after store/
+def create_item(name):
+    request_data = request.get_json()
+    new_item = {'name': request_data['name'],'price': request_data['price']}
+    for store in stores:
+        if store['name'] == name:
+            store['items'].append(new_item)
+            return new_item,201
+    return {'error':'store not found'},404
+
+@app.get("/store/<string:name>")
+def get_store_name(name):
+    for store in stores:
+        if store['name'] == name:
+            return store,201
+    return {'error':'store not found'},404
