@@ -1,8 +1,8 @@
 from flask import Flask
 from flask_smorest import Api
 
-from resource.item import blp as ItemBlueprint
-from resource.store import blp as StoreBlueprint
+from resources.item import blp as ItemBlueprint
+from resources.store import blp as StoreBlueprint
 
 app = Flask(__name__)
 
