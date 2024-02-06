@@ -32,7 +32,7 @@ def create_store():
     return new_store,201 #201 is the return status code
 
 @app.delete("/store/<string:store_id>")
-def delete_item(store_id):
+def delete_store(store_id):
     try:
         name = stores[store_id]["name"]
         del stores[store_id]
@@ -96,3 +96,9 @@ def update_item(item_id):
         else:
             abort(404,message = "item not found.")
     return items[item_id],201
+
+
+
+# sudo docker build -t flask-smorest-api .
+
+# sudo docker run -p 5005:5000 -w /app -v "$(pwd):/app" flask-smorest-api
