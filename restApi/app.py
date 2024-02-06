@@ -10,6 +10,13 @@ app = Flask(__name__)
 def get_store():
     return {"stores":list(stores.values())}
 
+@app.get("/store/<string:store_id>")#grabbing the store name. whatever text comes after store/
+def get_store_name(store_id):
+    try:
+        return stores[store_id]
+    except KeyError:
+        abort(404,message = "store not found.")
+
 @app.post("/store") #http://127.0.0.1:5000/store
 def create_store():
     store_data = request.get_json() #request is the body sent in the post request. comes from flask. import from flask
@@ -24,7 +31,7 @@ def create_store():
     stores[store_id] = new_store
     return new_store,201 #201 is the return status code
 
-@app.post("/item") #grabbing the store name. whatever text comes after store/
+@app.post("/item")
 def create_item():
     item_data = request.get_json()
     if (
@@ -36,7 +43,7 @@ def create_item():
             404,
             message = "Bad request. Please ensure 'price' 'store_id' and 'name' are present in the json payload"
         )#aborts the request and returns error code with message
-    for item in item.values():
+    for item in items.values():
         if(
             item_data["name"]==item["name"]
             and item_data["store_id"]==item["store_id"]
@@ -54,12 +61,7 @@ def create_item():
 def get_all_items():
     return {"items":list(items.values())}
 
-@app.get("/store/<string:store_id>")
-def get_store_name(store_id):
-    try:
-        return stores[store_id]
-    except KeyError:
-        abort(404,message = "store not found.")
+
     
 @app.get("/item/<string:item_id>")
 def get_item(item_id):
@@ -67,3 +69,21 @@ def get_item(item_id):
         return items[item_id]
     except KeyError:
         abort(404,message = "item not found.")
+
+@app.delete("/item/<string:item_id>")
+def delete_item(item_id):
+    try:
+        del items[item_id]
+        return {"message":"item deleted"}
+    except KeyError:
+        abort(404,message = "item not found.")
+
+@app.put("/item/<string:item_id>")
+def update_item(item_id):
+    item_info = request.get_json()
+    for key in item_info.keys():
+        if key in item_info.keys():
+            items[item_id][key]=item_info[key]
+        else:
+            abort(404,message = "item not found.")
+    return items[item_id],201
