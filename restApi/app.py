@@ -31,6 +31,15 @@ def create_store():
     stores[store_id] = new_store
     return new_store,201 #201 is the return status code
 
+@app.delete("/store/<string:store_id>")
+def delete_item(store_id):
+    try:
+        name = stores[store_id]["name"]
+        del stores[store_id]
+        return {"message":f"{name} deleted"}
+    except KeyError:
+        abort(404,message = "store not found.")
+
 @app.post("/item")
 def create_item():
     item_data = request.get_json()
