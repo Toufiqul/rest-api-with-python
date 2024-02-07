@@ -3,11 +3,11 @@ from flask import Flask
 from flask_smorest import Api
 
 from db import db
+import models
 
 from resources.item import blp as ItemBlueprint
 from resources.store import blp as StoreBlueprint
 
-import models
 
 def create_app(db_url=None):
     app = Flask(__name__)
@@ -26,7 +26,10 @@ def create_app(db_url=None):
     
     api = Api(app)
 
-    def create_tables():
+    # @app.before_first_request
+    # def create_tables():
+    #     db.create_all()
+    with app.app_context():
         db.create_all()
 
     api.register_blueprint(ItemBlueprint)
