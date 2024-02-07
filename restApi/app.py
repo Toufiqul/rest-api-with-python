@@ -29,6 +29,12 @@ def create_app(db_url=None):
     # @app.before_first_request
     # def create_tables():
     #     db.create_all()
+    
+    # use 
+    # with app.app_context(): 
+    # instead of 
+    # @app.before_first_request
+    # def create_tables():
     with app.app_context():
         db.create_all()
 
