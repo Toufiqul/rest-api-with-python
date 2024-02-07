@@ -17,9 +17,10 @@ class Store(MethodView):
             store = StoreModel.query.get_or_404(store_id) #quesry comes from flask SQLAlchemy. doesn't exist in just SQLAlchemy
             return store
     def delete(cls, store_id):
-            item = StoreModel.query.get_or_404(store_id)
-            raise NotImplementedError("will implement delete store later")
-
+            store = StoreModel.query.get_or_404(store_id)
+            db.session.delete(store)
+            db.session.commit()
+            return {"message": f"{store}deleted"}
 
 
 @blp.route("/store")
