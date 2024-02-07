@@ -14,7 +14,7 @@ blp = Blueprint("Stores", "stores", description="Operations on stores")
 class Store(MethodView):
     @blp.response(200, StoreSchema)
     def get(cls, store_id):
-            store = StoreModel.query.get_or_404(store_id)
+            store = StoreModel.query.get_or_404(store_id) #quesry comes from flask SQLAlchemy. doesn't exist in just SQLAlchemy
             return store
     def delete(cls, store_id):
             item = StoreModel.query.get_or_404(store_id)
