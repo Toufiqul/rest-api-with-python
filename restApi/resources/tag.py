@@ -34,7 +34,7 @@ class Tag(MethodView):
     
     @blp.response(
         202,
-        description="deletes a tab if no item is tagged with the given tag"
+        description="deletes a tab if no item is tagged with the given tag",
         example={"message": "tag deleted"}
     )
     @blp.alt_response(
@@ -60,7 +60,7 @@ class Tag(MethodView):
 @blp.route("/item/<string:item_id>/tag/<string:tag_id>")
 class Tag(MethodView):
     @blp.response(201, TagSchema)
-    def ger(self,item_id,tag_id):
+    def get(self,item_id,tag_id):
         item = ItemModel.query.get_or_404(item_id)
         tag = TagModel.query.get_or_404(tag_id)
 
@@ -74,7 +74,7 @@ class Tag(MethodView):
         return tag
     
     @blp.response(201, TagAndItemSchema)
-    def ger(self,item_id,tag_id):
+    def delete(self,item_id,tag_id):
         item = ItemModel.query.get_or_404(item_id)
         tag = TagModel.query.get_or_404(tag_id)
 

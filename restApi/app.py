@@ -48,3 +48,5 @@ def create_app(db_url=None):
 # sudo docker build -t flask-smorest-api .
 
 # sudo docker run -p 5005:5000 -w /app -v "$(pwd):/app" flask-smorest-api
+
+# TFzst?bGW7tUE3c
