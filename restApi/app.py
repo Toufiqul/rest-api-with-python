@@ -4,6 +4,7 @@ from flask_smorest import Api
 import secrets
 
 from flask_jwt_extended import JWTManager
+from flask_migrate import Migrate
 
 from db import db
 import models
@@ -27,7 +28,8 @@ def create_app(db_url=None):
     app.config["SQLALCHEMY_DATABASE_URI"]=db_url or os.getenv("DATABASE_URL" ,"sqlite:///data.db")
     app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
     db.init_app(app)
-
+    
+    migrate = Migrate(app, db)
     
     api = Api(app)
 
@@ -55,6 +57,6 @@ def create_app(db_url=None):
     return app
 # sudo docker build -t flask-smorest-api .
 
-# sudo docker run -p 5005:5000 -w /app -v "$(pwd):/app" flask-smorest-api
+# sudo docker run -p 5000:5000 -w /app -v "$(pwd):/app" flask-smorest-api
 
 # TFzst?bGW7tUE3c
